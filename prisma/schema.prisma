@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Task {
+  id         String   @id @default(cuid())
+  userEmail  String
+  title      String
+  category   String?
+  pomodoros  Int      @default(1)
+  status     String   @default("TODO") // <- string, bukan enum
+  dueDate    DateTime?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model PushSubscription {
+  id           String   @id @default(cuid())
+  userEmail    String
+  endpoint     String   @unique
+  p256dh       String
+  auth         String
+  morningOn    Boolean  @default(true)
+  afternoonOn  Boolean  @default(true)
+  eveningOn    Boolean  @default(true)
+  timezone     String   @default("Asia/Makassar")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model UserSettings {
+  id           String   @id @default(cuid())
+  userEmail    String   @unique
+  timezone     String   @default("Asia/Makassar")
+  morningOn    Boolean  @default(true)
+  afternoonOn  Boolean  @default(true)
+  eveningOn    Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

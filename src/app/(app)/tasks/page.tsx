@@ -1,4 +1,6 @@
 "use client";
+export const dynamic = "force-dynamic";
+
 import { useEffect } from "react";
 import AddTaskDialog from "@/components/AddTaskDialog";
 import TaskList from "@/components/TaskList";
@@ -6,8 +8,6 @@ import EnablePush from "@/components/EnablePush";
 import { useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-
-export const dynamic = "force-dynamic";
 
 export default function TasksPage() {
   const { data: session, status } = useSession();

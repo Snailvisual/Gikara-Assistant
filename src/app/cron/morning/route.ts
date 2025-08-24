@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { prisma } from "@/lib/db";
 import webpush from "web-push";
 import { morningAffirmations } from "@/lib/affirmations";
@@ -12,7 +14,7 @@ export async function GET() {
   const subs = await prisma.pushSubscription.findMany({ where: { morningOn: true } });
   const aff = morningAffirmations[Math.floor(Math.random() * morningAffirmations.length)];
 
-  await Promise.allSettled(subs.map(async (s) => {
+  await Promise.allSettled(subs.map(async (s: { endpoint: string; p256dh: string; auth: string; }) => {
     const payload = JSON.stringify({
       title: "Selamat Pagi 👋",
       body: `${aff}\nCek jadwal & tugas hari ini.`,
